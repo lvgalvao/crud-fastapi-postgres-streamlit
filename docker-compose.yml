@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile-backend
+    volumes:
+      - ./backend:/app
+      - ./backend/sqlite_db:/app/sqlite_db  # Persistir dados SQLite
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile-frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8501:8501"
