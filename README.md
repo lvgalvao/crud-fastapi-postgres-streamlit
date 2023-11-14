@@ -11,3 +11,13 @@ Simula um sistema de cadastro de produtos.
 ```bash
 docker-compose up -d --build
 ```
+
+## Uso
+
+Frontend:
+Acesse o endereço http://localhost:8501
+
+## Documentação
+
+Backend:
+Acesse o endereço http://localhost:8000/docs
