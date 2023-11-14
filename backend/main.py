@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from . import crud, schemas, models
-from .database import SessionLocal, engine
+import crud, schemas, models
+from database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -34,3 +34,26 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return db_product
+
+
+@app.delete("/products/{product_id}", response_model=schemas.Product)
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    db_product = crud.delete_product(db, product_id=product_id)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return db_product
+
+
+@app.put("/products/{product_id}", response_model=schemas.Product)
+def update_product(
+    product_id: int, product: schemas.ProductCreate, db: Session = Depends(get_db)
+):
+    db_product = crud.update_product(db, product_id=product_id, product=product)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return db_product
+
+
+@app.get("/")
+def read_root():
+    return {"Hello": "Print"}

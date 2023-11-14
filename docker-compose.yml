@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build: 
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     volumes:
       - ./backend:/app
@@ -12,7 +12,7 @@ services:
 
   frontend:
     build: 
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
