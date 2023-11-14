@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 st.title("Cadastro de Produtos")
 
@@ -16,7 +17,7 @@ with st.form("new_product"):
 
     if submit_button:
         response = requests.post(
-            "http://localhost:8000/products/",
+            "http://backend:8000/products/",
             json={
                 "name": name,
                 "description": description,
@@ -30,38 +31,79 @@ with st.form("new_product"):
         else:
             st.error("Erro ao adicionar o produto")
 
+st.title("Exibir Produtos")
+
 # Botão para exibir produtos existentes
 if st.button("Exibir Todos os Produtos"):
-    response = requests.get("http://localhost:8000/products/")
+    response = requests.get("http://backend:8000/products/")
     if response.status_code == 200:
         products = response.json()
-        for product in products:
-            st.write(
-                f"ID: {product['id']}, Nome: {product['name']}, Descrição: {product['description']}, Preço: {product['price']}, Categoria: {product['categoria']}, Email do Fornecedor: {product['email_fornecedor']}, Criado em: {product['created_at']}"
-            )
+
+        # Transformando os dados em DataFrame
+        df = pd.DataFrame(products)
+        # Reorganiza as colunas
+        df = df[
+            [
+                "id",
+                "name",
+                "description",
+                "price",
+                "categoria",
+                "email_fornecedor",
+                "created_at",
+            ]
+        ]
+
+        # Exibe o DataFrame sem o índice
+        st.write(df.to_html(index=False), unsafe_allow_html=True)
     else:
         st.error("Erro ao buscar os produtos")
 
 # Botão para obter um produto específico
+number_imput_to_get = st.number_input(
+    "ID do Produto para Obter", min_value=1, format="%d"
+)
 get_button = st.button("Obter Detalhes de um Produto")
 if get_button:
-    get_id = st.number_input("ID do Produto para Obter", min_value=1, format="%d")
-    response = requests.get(f"http://localhost:8000/products/{get_id}")
+    get_id = number_imput_to_get
+    response = requests.get(f"http://backend:8000/products/{get_id}")
     if response.status_code == 200:
         product = response.json()
-        st.write(f"Detalhes do Produto: {product}")
+        df = pd.DataFrame([product])
+
+        df = df[
+            [
+                "id",
+                "name",
+                "description",
+                "price",
+                "categoria",
+                "email_fornecedor",
+                "created_at",
+            ]
+        ]
+
+        # Exibe o DataFrame sem o índice
+        st.write(df.to_html(index=False), unsafe_allow_html=True)
     else:
-        st.error("Produto não encontrado")
+        st.error("Erro ao buscar os produtos")
+
+st.title("Deletar Produto")
 
 # Botão para deletar um produto
+number_imput_to_delete = st.number_input(
+    "ID do Produto para Deletar", min_value=1, format="%d"
+)
 delete_button = st.button("Deletar um Produto")
 if delete_button:
-    delete_id = st.number_input("ID do Produto para Deletar", min_value=1, format="%d")
-    response = requests.delete(f"http://localhost:8000/products/{delete_id}")
+    delete_id = number_imput_to_delete
+    response = requests.delete(f"http://backend:8000/products/{delete_id}")
     if response.status_code == 200:
         st.success("Produto deletado com sucesso!")
     else:
         st.error("Erro ao deletar o produto")
+
+st.title("Atualizar Produto")
 
 with st.form("update_product"):
     st.write("Atualizar um produto existente")
@@ -85,7 +127,7 @@ with st.form("update_product"):
 
         if update_data:  # Se houver dados para atualizar
             response = requests.put(
-                f"http://localhost:8000/products/{update_id}", json=update_data
+                f"http://backend:8000/products/{update_id}", json=update_data
             )
             if response.status_code == 200:
                 st.success("Produto atualizado com sucesso!")

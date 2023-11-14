@@ -16,14 +16,15 @@ class ProductBase(BaseModel):
     name: str
     description: Optional[str] = None
     price: PositiveInt
-    categoria: CategoriaBase
+    categoria: str  # Modificado para str
     email_fornecedor: EmailStr
 
     @validator("categoria")
     def check_categoria(cls, v):
-        if v not in CategoriaBase:
-            raise ValueError("Categoria inválida")
-        return v
+        # Verifica se a string v é um valor válido do Enum
+        if v in [item.value for item in CategoriaBase]:
+            return v
+        raise ValueError("Categoria inválida")
 
 
 class ProductCreate(ProductBase):
@@ -32,7 +33,7 @@ class ProductCreate(ProductBase):
 
 class Product(ProductBase):
     id: int
-    created_at: datetime = datetime.now()
+    created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
