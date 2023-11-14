@@ -3,7 +3,7 @@ services:
   backend:
     build: 
       context: .
-      dockerfile: Dockerfile-backend
+      dockerfile: Dockerfile
     volumes:
       - ./backend:/app
       - ./backend/sqlite_db:/app/sqlite_db  # Persistir dados SQLite
@@ -13,7 +13,7 @@ services:
   frontend:
     build: 
       context: .
-      dockerfile: Dockerfile-frontend
+      dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
     ports:
