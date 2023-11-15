@@ -27,7 +27,7 @@ def delete_product(db: Session, product_id: int):
 
 
 def update_product(db: Session, product_id: int, product: ProductUpdate):
-    db_product = db.query(ProductModel).filter(ProductModel == product_id).first()
+    db_product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
 
     if db_product is None:
         return None
