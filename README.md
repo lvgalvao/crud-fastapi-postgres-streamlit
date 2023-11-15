@@ -10,7 +10,7 @@ Você precisa conhecer o CRUD.
 
 O principal responsável por tornar isso possível é o ORM
 
-![Imagem ORM](assets/orm.jpeg)
+![Imagem ORM](assets/orm.png)
 
 ## Instalação via docker
 
