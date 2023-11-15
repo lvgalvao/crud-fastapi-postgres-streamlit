@@ -12,6 +12,7 @@ fastapi = "^0.104.1"
 uvicorn = "^0.24.0.post1"
 streamlit = "^1.28.1"
 sqlalchemy = "^2.0.23"
+plotly = "^5.18.0"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -31,4 +32,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.taskipy.tasks]
 lint = "ruff . & isort ."
 kill = "kill -9 $(lsof -t -i:8000)"
-run = "docker-compose up -d --build"
+run = "uvicorn backend.main:app --reload & streamlit run frontend/app.py"

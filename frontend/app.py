@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 import pandas as pd
+import plotly.express as px
+
 
 st.set_page_config(layout="wide")
 
@@ -150,3 +152,42 @@ with st.expander("Atualizar Produto"):
                 show_response_message(response)
             else:
                 st.error("Nenhuma informação fornecida para atualização")
+
+# Adicionar gráfico de média de preço por categoria
+with st.expander("Média de Preço por Categoria"):
+    response = requests.get("http://backend:8000/products/")
+    if response.status_code == 200:
+        products = response.json()
+        df = pd.DataFrame(products)
+
+        # Calcular a média de preço por categoria
+        avg_price_per_category = df.groupby("categoria")["price"].mean().reset_index()
+
+        # Criar o gráfico
+        fig = px.bar(
+            avg_price_per_category,
+            x="categoria",
+            y="price",
+            title="Média de Preço por Categoria",
+        )
+        st.plotly_chart(fig)
+    else:
+        show_response_message(response)
+
+# Adicionar gráfico dos 5 produtos mais caros
+with st.expander("5 Produtos Mais Caros"):
+    response = requests.get("http://backend:8000/products/")
+    if response.status_code == 200:
+        products = response.json()
+        df = pd.DataFrame(products)
+
+        # Selecionar os 5 produtos mais caros
+        top_5_expensive_products = df.nlargest(5, "price")
+
+        # Criar o gráfico
+        fig = px.bar(
+            top_5_expensive_products, x="name", y="price", title="5 Produtos Mais Caros"
+        )
+        st.plotly_chart(fig)
+    else:
+        show_response_message(response)
