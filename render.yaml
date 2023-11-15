@@ -1,0 +1,34 @@
+services:
+  # Postgres Service
+  - type: postgres
+    name: mydatabase
+    env: postgres
+    plan: starter
+    properties:
+      username: user
+      password: password
+      database: mydatabase
+
+  # Backend Service
+  - type: web
+    name: backend-service
+    env: docker
+    dockerfilePath: "./backend/Dockerfile"
+    buildCommand: "cd backend && docker build -t backend-service ."
+    startCommand: "docker run -dp 8000:8000 backend-service"
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://user:password@mydatabase.internal:5432/mydatabase
+    healthCheckPath: /health
+    ports:
+      - 8000
+
+  # Frontend Service
+  - type: web
+    name: frontend-service
+    env: docker
+    dockerfilePath: "./frontend/Dockerfile"
+    buildCommand: "cd frontend && docker build -t frontend-service ."
+    startCommand: "docker run -dp 8501:8501 frontend-service"
+    ports:
+      - 8501
