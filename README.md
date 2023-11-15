@@ -30,6 +30,10 @@ Esta etapa remove permanentemente dados do banco de dados, exigindo cautela, pri
 
 Compreender o CRUD vai além de manipular dados; é sobre melhorar a interação com colegas de desenvolvimento.
 
+O principal responsável por tornar isso possível é o ORM
+
+[Imagem ORM](assets/orm.jpeg)
+
 ## Instalação via docker
 
 ```bash
