@@ -2,37 +2,15 @@
 
 Você sabe o que é CRUD?
 
-[Imagem CRUD](assets/crud.jpeg)
+![Imagem CRUD](assets/crud.jpeg)
 
 A BlackFriday ta chegando. Você sabe como que o Iphone fica mais barato? Você sabe como que o vídeo game é cadastrado? Você sabia que quando abre o seu navegador, nada mais é do que o seu browser fazendo um SELECT no banco do Mercado Livre 🤯
 
 Você precisa conhecer o CRUD.
 
-O CRUD gerencia todo o fluxo de cadastro, alteração e remoção de produtos, passando por API, servidor, banco de dados e retornando ao browser. Ou seja, a maioria dos dados da sua query "SELECT * FROM" vêm de sistemas CRUD.
-
-Há quatro ações principais:
-
-Criação (Create) - INSERT INTO
-
-Aqui, um produto é inserido no sistema, geralmente através de um formulário no navegador. Os dados coletados são enviados ao servidor, onde são processados e armazenados no banco de dados. Esta etapa define a estrutura e o armazenamento dos dados.
-
-Leitura (Read) - SELECT * FROM
-
-Após o armazenamento, visualizamos o produto no banco de dados. Realizamos consultas para extrair informações, fundamentais para apresentar os dados no navegador, como em listas de produtos ou dashboards. A eficiência nesta etapa impacta a rapidez e precisão na recuperação e exibição dos dados.
-
-Atualização (Update) - UPDATE SET
-
-Mudanças são realizadas através de interfaces de edição no navegador, e as alterações são atualizadas no banco de dados. Essas mudanças são então propagadas para o banco de dados, garantindo que as informações sejam atualizadas em tempo real.
-
-Remoção (Delete) - DELETE WHERE
-
-Esta etapa remove permanentemente dados do banco de dados, exigindo cautela, principalmente para não esquecer o WHERE.
-
-Compreender o CRUD vai além de manipular dados; é sobre melhorar a interação com colegas de desenvolvimento.
-
 O principal responsável por tornar isso possível é o ORM
 
-[Imagem ORM](assets/orm.jpeg)
+![Imagem ORM](assets/orm.jpeg)
 
 ## Instalação via docker
 
@@ -81,7 +59,7 @@ Uma das principais vantagens de trabalhar com o SQLAlchemy é que ele é compat�
 
 Além disso, ele realiza a sanitização dos dados, evitando ataques de SQL Injection.
 
-(imagem)[assets/sqlinjection.jpeg]
+![imagem](assets/sqlinjection.jpeg)
 
 Outro ponto, é que você pode trabalhar com métodos nativos do Python, como por exemplo o filter, que é muito utilizado para fazer filtros em listas. Isso facilita muito a nossa vida, pois não precisamos aprender uma nova linguagem para fazer a comunicação com o banco de dados. Quem tiver familidade com Pandas, vai se sentir em casa.
 
@@ -187,12 +165,11 @@ O Pandas é uma biblioteca para manipulação de dados com Python. Ele é muito 
 
 
 
-## Nossa estrutura de pastas e arquivos
-
-```bash
-
-
 ## Deploy <> Em construção
+
+
+
+
 
 ### AWS ECS
 
